@@ -70,14 +70,17 @@
     justify-content:space-between;
     gap:12px;
   }
+  /* 可読性向上したカウントダウンスタイル */
   .countdown {
-    background: rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.95);
-    padding:8px 12px;
-    border-radius:10px;
-    font-weight:600;
+    background: rgba(255,255,255,0.98); /* 明るい背景で確実に可読 */
+    color: #064b47;                      /* ヘッダーと調和するダークグリーン */
+    padding:10px 14px;
+    border-radius:12px;
+    font-weight:700;
     font-size:14px;
-    box-shadow: 0 2px 8px rgba(3,46,43,0.08) inset;
+    box-shadow: 0 4px 14px rgba(3,46,43,0.12);
+    border: 1px solid rgba(2,40,36,0.06);
+    backdrop-filter: blur(6px);
   }
 
   .search {
@@ -235,7 +238,7 @@
       <label><input type="checkbox"> 海外旅行保険証書</label>
       <label><input type="checkbox"> クレジットカード</label>
       <label><input type="checkbox"> 現金（USドル）</label>
-      <label><input type="checkbox"> 国際���許証（必要なら）</label>
+      <label><input type="checkbox"> 国際免許証（必要なら）</label>
     </details>
   </section>
 
@@ -273,7 +276,7 @@
       <summary>🧴 衛生・健康</summary>
       <label><input type="checkbox"> 虫よけスプレー</label>
       <label><input type="checkbox"> 日焼け止め</label>
-      <label><input type="checkbox"> 常備薬（胃薬・下痢止め・解熱剤など）</label>
+      <label><input type="checkbox"> 常備薬（胃薬・下痢止��・解熱剤など）</label>
       <label><input type="checkbox"> ウェットティッシュ・ポケットティッシュ</label>
       <label><input type="checkbox"> 塩飴・ポカリ粉末</label>
       <label><input type="checkbox"> マスク</label>
@@ -319,7 +322,7 @@
 </div>
 
 <script>
-  // 保存・復元 (既存)
+  // チェック状態の保存・復元
   const boxes = document.querySelectorAll('input[type="checkbox"]');
   boxes.forEach((box, i) => {
     const saved = localStorage.getItem("check" + i);
@@ -351,7 +354,7 @@
   // update every hour in case user keeps page open
   setInterval(updateCountdown, 1000 * 60 * 60);
 
-  // --- サイト内検索機能（既存: ハイライト・折りたたみ連動） ---
+  // --- サイト���検索機能 ---
   const searchableSelectors = 'label, summary, section p, section a';
   const searchableNodes = Array.from(document.querySelectorAll(searchableSelectors));
   searchableNodes.forEach(node => {
