@@ -18,6 +18,26 @@
     font-size: 1.6em;
     margin-top: 20px;
   }
+  .search {
+    display:flex;
+    justify-content:center;
+    margin: 8px 0 6px 0;
+  }
+  .search input[type="search"] {
+    width:100%;
+    max-width:640px;
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+    font-size:1rem;
+  }
+  .search .info {
+    text-align:center;
+    font-size:0.9rem;
+    color:#666;
+    margin-top:6px;
+  }
   section {
     background: #fff;
     margin: 12px 0;
@@ -67,6 +87,11 @@
   a:hover {
     text-decoration: underline;
   }
+  mark {
+    background: #fffb91;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
   @media (max-width: 600px) {
     body {
       font-size: 16px;
@@ -83,8 +108,13 @@
 </head>
 <body>
 
-<h1>🇰🇭 カンボジア旅行チェックリスト</h1>
+<h1>🇰�� カンボジア旅行チェックリスト</h1>
 <p style="text-align:center;">11/17出発・4泊（プノンペン2泊＋シェムリアップ2泊）</p>
+
+<div class="search">
+  <input id="site-search" type="search" placeholder="このページ内を検索（例: 水着、パスポート、Walica）" aria-label="サイト内検索">
+</div>
+<div class="search info" id="search-info" aria-live="polite" style="display:none;">検索結果: <span id="result-count">0</span> 件</div>
 
 <!-- やることリスト -->
 <section>
@@ -111,7 +141,7 @@
     <label><input type="checkbox"> e-Visa印刷（2部）</label>
     <label><input type="checkbox"> 航空券（Eチケット）</label>
     <label><input type="checkbox"> 海外旅行保険証書</label>
-    <label><input type="checkbox"> クレジットカード</label>
+    <label><input type="checkbox"> クレ��ットカード</label>
     <label><input type="checkbox"> 現金（USドル）</label>
     <label><input type="checkbox"> 国際免許証（必要なら）</label>
   </details>
@@ -149,7 +179,7 @@
 <section>
   <details>
     <summary>🧴 衛生・健康</summary>
-    <label><input type="checkbox"> 虫よけスプ��ー</label>
+    <label><input type="checkbox"> 虫よけスプレー</label>
     <label><input type="checkbox"> 日焼け止め</label>
     <label><input type="checkbox"> 常備薬（胃薬・下痢止め・解熱剤など）</label>
     <label><input type="checkbox"> ウェットティッシュ・ポケットティッシュ</label>
@@ -211,6 +241,80 @@
       localStorage.setItem("check" + i, box.checked);
     });
   });
+
+  // --- サイト内検索機能 ---
+  // 対象ノード（label, summary, p, a）に元のHTMLを保存しておく
+  const searchableSelectors = 'label, summary, section p, section a, section summary';
+  const searchableNodes = Array.from(document.querySelectorAll(searchableSelectors));
+  searchableNodes.forEach(node => {
+    node.dataset.original = node.innerHTML;
+  });
+
+  const searchInput = document.getElementById('site-search');
+  const resultCountEl = document.getElementById('result-count');
+  const searchInfo = document.getElementById('search-info');
+
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\\]\]/g, '\$&');
+  }
+
+  function performSearch(q) {
+    const lowQ = q.trim().toLowerCase();
+    let totalMatches = 0;
+
+    // restore all nodes first
+    searchableNodes.forEach(node => {
+      node.innerHTML = node.dataset.original;
+    });
+
+    if (lowQ === '') {
+      // show all labels and collapse details to their previous state
+      document.querySelectorAll('label').forEach(l => l.style.display = 'flex');
+      document.querySelectorAll('section details').forEach(d => d.open = false);
+      searchInfo.style.display = 'none';
+      return;
+    }
+
+    const regex = new RegExp('(' + escapeRegExp(lowQ) + ')', 'ig');
+
+    document.querySelectorAll('section').forEach(section => {
+      let sectionMatches = 0;
+      // search within labels and paragraphs and links inside this section
+      const nodes = section.querySelectorAll('label, p, a, summary');
+      nodes.forEach(n => {
+        const text = n.textContent || '';
+        if (text.toLowerCase().indexOf(lowQ) !== -1) {
+          // highlight matches in the HTML using the original stored value
+          const original = n.dataset && n.dataset.original ? n.dataset.original : n.innerHTML;
+          n.innerHTML = original.replace(regex, '<mark>$1</mark>');
+          sectionMatches += 1;
+        } else {
+          // hide labels only (keep paragraphs/links visible if needed)
+          if (n.tagName.toLowerCase() === 'label') {
+            n.style.display = 'none';
+          }
+        }
+      });
+
+      if (sectionMatches > 0) {
+        section.querySelector('details').open = true;
+      } else {
+        section.querySelector('details').open = false;
+      }
+
+      totalMatches += sectionMatches;
+    });
+
+    resultCountEl.textContent = totalMatches;
+    searchInfo.style.display = 'block';
+  }
+
+  let debounceTimer = null;
+  searchInput.addEventListener('input', (e) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => performSearch(e.target.value), 200);
+  });
+
 </script>
 
 </body>
