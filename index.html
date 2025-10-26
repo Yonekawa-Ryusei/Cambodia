@@ -1,238 +1,325 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>カンボジア旅行チェックリスト</title>
 <style>
+  :root{
+    --bg-start: #FFF7E6;
+    --bg-end: #FFEFD5;
+    --accent: #00897b;
+    --muted: #6b6b6b;
+    --card-bg: rgba(255,255,255,0.92);
+    --shadow: 0 6px 18px rgba(13, 20, 25, 0.06);
+    --mark: #fff1a8;
+  }
+  html,body{
+    height:100%;
+    margin:0;
+  }
   body {
-    font-family: "Hiragino Sans", "Meiryo", sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0 10px 60px;
-    color: #333;
+    font-family: "Hiragino Sans", "Meiryo", "Noto Sans JP", sans-serif;
+    background: linear-gradient(180deg, #FFF6E8 0%, #FFF0E0 40%, #F6EFEA 100%);
+    padding: 18px 12px 60px;
+    color: #1f2d2b;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
   }
-  h1 {
-    text-align: center;
-    color: #00897b;
-    font-size: 1.6em;
-    margin-top: 20px;
+
+  .top {
+    max-width: 900px;
+    margin: 0 auto 14px;
   }
+
+  .header {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background: linear-gradient(135deg, rgba(0,137,123,0.95), rgba(3,169,162,0.9));
+    color: #fff;
+    padding:14px 16px;
+    border-radius:14px;
+    box-shadow: 0 8px 22px rgba(3, 46, 43, 0.12);
+  }
+  .header .logo {
+    font-size:28px;
+    line-height:1;
+  }
+  .header .title {
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+  }
+  .header h1 {
+    margin:0;
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:0.02em;
+  }
+  .header p {
+    margin:0;
+    font-size:13px;
+    opacity:0.95;
+  }
+
+  .meta {
+    margin-top:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .countdown {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.95);
+    padding:8px 12px;
+    border-radius:10px;
+    font-weight:600;
+    font-size:14px;
+    box-shadow: 0 2px 8px rgba(3,46,43,0.08) inset;
+  }
+
   .search {
     display:flex;
     justify-content:center;
-    margin: 8px 0 6px 0;
+    margin: 12px 0 6px 0;
+    width:100%;
   }
   .search input[type="search"] {
     width:100%;
     max-width:640px;
     padding:10px 12px;
-    border-radius:8px;
-    border:1px solid #ddd;
+    border-radius:10px;
+    border:1px solid rgba(0,0,0,0.06);
+    background:var(--card-bg);
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
-    font-size:1rem;
+    font-size:15px;
+    outline:none;
+  }
+  .search input[type="search"]:focus {
+    box-shadow: 0 6px 18px rgba(3,169,162,0.12);
+    border-color: rgba(0,137,123,0.9);
   }
   .search .info {
     text-align:center;
     font-size:0.9rem;
-    color:#666;
+    color:var(--muted);
     margin-top:6px;
   }
-  section {
-    background: #fff;
-    margin: 12px 0;
-    padding: 10px 16px;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+
+  .container {
+    max-width: 900px;
+    margin: 14px auto 40px;
   }
+
+  section {
+    background: var(--card-bg);
+    margin: 12px 0;
+    padding: 12px 16px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(2,40,36,0.03);
+  }
+
   summary {
-    font-weight: bold;
-    font-size: 1.1em;
-    color: #00695c;
+    font-weight: 700;
+    font-size: 1.05em;
+    color: #064b47;
     cursor: pointer;
-    padding: 10px 0;
+    padding: 6px 0;
     outline: none;
   }
+
   label {
     display: flex;
     align-items: center;
     padding: 10px 8px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
     font-size: 1em;
   }
   label:last-child {
     border-bottom: none;
   }
   input[type="checkbox"] {
-    transform: scale(1.3);
+    transform: scale(1.25);
     margin-right: 10px;
-    accent-color: #00897b;
+    accent-color: var(--accent);
   }
   label:active {
-    background-color: #e0f2f1;
+    background-color: rgba(0,0,0,0.01);
   }
-  footer {
-    text-align: center;
-    font-size: 0.85em;
-    color: #777;
-    margin-top: 30px;
-  }
-  details {
-    transition: all 0.3s ease;
-  }
+
   a {
     color: #00695c;
     text-decoration: none;
+    font-weight:600;
   }
   a:hover {
     text-decoration: underline;
   }
+
   mark {
-    background: #fffb91;
+    background: var(--mark);
     padding: 0 2px;
     border-radius: 2px;
   }
-  @media (max-width: 600px) {
-    body {
-      font-size: 16px;
-      padding: 0 5px 60px;
-    }
-    label {
-      padding: 12px 6px;
-    }
-    input[type="checkbox"] {
-      transform: scale(1.4);
-    }
+
+  footer {
+    text-align: center;
+    font-size: 0.88em;
+    color: #586361;
+    margin-top: 26px;
   }
+
+  @media (max-width:700px) {
+    .header { padding:12px; gap:10px }
+    .header .logo { font-size:24px }
+    .header h1 { font-size:16px }
+    .meta { flex-direction:column; align-items:flex-start; gap:8px }
+  }
+
 </style>
 </head>
 <body>
 
-<h1>🇰�� カンボジア旅行チェックリスト</h1>
-<p style="text-align:center;">11/17出発・4泊（プノンペン2泊＋シェムリアップ2泊）</p>
+<div class="top">
+  <header class="header" role="banner">
+    <div class="logo" aria-hidden="true">🇰🇭</div>
+    <div class="title">
+      <h1>カンボジア旅行チェックリスト</h1>
+      <p>11/17 出発 — 4泊（プノンペン2泊＋シェムリアップ2泊）</p>
+    </div>
+    <div style="margin-left:auto" aria-hidden="true"></div>
+  </header>
 
-<div class="search">
-  <input id="site-search" type="search" placeholder="このページ内を検索（例: 水着、パスポート、Walica）" aria-label="サイト内検索">
+  <div class="meta" role="region" aria-label="旅行メタ情報">
+    <div id="countdown" class="countdown" aria-live="polite">旅行まであと — 日</div>
+  </div>
 </div>
-<div class="search info" id="search-info" aria-live="polite" style="display:none;">検索結果: <span id="result-count">0</span> 件</div>
 
-<!-- やることリスト -->
-<section>
-  <details open>
-    <summary>✅ 出発前にやること</summary>
-    <label><input type="checkbox"> パスポート有効期限を確認（6か月以上）</label>
-    <label><input type="checkbox"> e-Visa申請・印刷（2部）</label>
-    <label><input type="checkbox"> 海外旅行保険の加入または確認</label>
-    <label><input type="checkbox"> 航空券・ホテルを予約・印刷</label>
-    <label><input type="checkbox"> プノンペン⇄シェムリアップ間の移動予約</label>
-    <label><input type="checkbox"> 米ドル両替（小額紙幣中心）</label>
-    <label><input type="checkbox"> クレカ海外利用設定確認</label>
-    <label><input type="checkbox"> Grabアプリのインストール</label>
-    <label><input type="checkbox"> オフライン地図・翻訳アプリを準備</label>
-    <label><input type="checkbox"> 虫よけ・日焼け止め購入</label>
-  </details>
-</section>
+<div class="container">
+  <div class="search">
+    <input id="site-search" type="search"
+      placeholder="このページ内を検索（例: 水着、パスポート、Walica）"
+      aria-label="サイト内検索" />
+  </div>
+  <div class="search info" id="search-info" aria-live="polite" style="display:none;">
+    検索結果: <span id="result-count">0</span> 件
+  </div>
 
-<!-- 貴重品 -->
-<section>
-  <details>
-    <summary>🎫 貴重品</summary>
-    <label><input type="checkbox"> パスポート</label>
-    <label><input type="checkbox"> e-Visa印刷（2部）</label>
-    <label><input type="checkbox"> 航空券（Eチケット）</label>
-    <label><input type="checkbox"> 海外旅行保険証書</label>
-    <label><input type="checkbox"> クレ��ットカード</label>
-    <label><input type="checkbox"> 現金（USドル）</label>
-    <label><input type="checkbox"> 国際免許証（必要なら）</label>
-  </details>
-</section>
+  <!-- やることリスト -->
+  <section>
+    <details open>
+      <summary>✅ 出発前にやること</summary>
+      <label><input type="checkbox"> パスポート有効期限を確認（6か月以上）</label>
+      <label><input type="checkbox"> e-Visa申請・印刷（2部）</label>
+      <label><input type="checkbox"> 海外旅行保険の加入または確認</label>
+      <label><input type="checkbox"> 航空券・ホテルを予約・印刷</label>
+      <label><input type="checkbox"> プノンペン⇄シェムリアップ間の移動予約</label>
+      <label><input type="checkbox"> 米ドル両替（小額紙幣中心）</label>
+      <label><input type="checkbox"> クレカ海外利用設定確認</label>
+      <label><input type="checkbox"> Grabアプリのインストール</label>
+      <label><input type="checkbox"> オフライン地図・翻訳アプリを準備</label>
+      <label><input type="checkbox"> 虫よけ・日焼け止め購入</label>
+    </details>
+  </section>
 
-<!-- 電子機器 -->
-<section>
-  <details>
-    <summary>📱 電子機器</summary>
-    <label><input type="checkbox"> スマホ・充電ケーブル</label>
-    <label><input type="checkbox"> モバイルバッテリー</label>
-    <label><input type="checkbox"> 変換プラグ（A/C対応）</label>
-    <label><input type="checkbox"> カメラ・SDカード</label>
-    <label><input type="checkbox"> 延長コード</label>
-  </details>
-</section>
+  <!-- 貴重品 -->
+  <section>
+    <details>
+      <summary>🎫 貴重品</summary>
+      <label><input type="checkbox"> パスポート</label>
+      <label><input type="checkbox"> e-Visa印刷（2部）</label>
+      <label><input type="checkbox"> 航空券（Eチケット）</label>
+      <label><input type="checkbox"> 海外旅行保険証書</label>
+      <label><input type="checkbox"> クレジットカード</label>
+      <label><input type="checkbox"> 現金（USドル）</label>
+      <label><input type="checkbox"> 国際���許証（必要なら）</label>
+    </details>
+  </section>
 
-<!-- 衣類 -->
-<section>
-  <details>
-    <summary>👕 衣類</summary>
-    <label><input type="checkbox"> Tシャツ ×4〜5</label>
-    <label><input type="checkbox"> 長袖シャツ ×1〜2</label>
-    <label><input type="checkbox"> 長ズボン・ロングスカート ×2</label>
-    <label><input type="checkbox"> 短パン ×1〜2</label>
-    <label><input type="checkbox"> 下着・靴下 ×5</label>
-    <label><input type="checkbox"> 水着</label>
-    <label><input type="checkbox"> 帽子・サングラス</label>
-    <label><input type="checkbox"> 軽い羽織りもの</label>
-    <label><input type="checkbox"> 折りたたみ傘 or レインコート</label>
-  </details>
-</section>
+  <!-- 電子機器 -->
+  <section>
+    <details>
+      <summary>📱 電子機器</summary>
+      <label><input type="checkbox"> スマホ・充電ケーブル</label>
+      <label><input type="checkbox"> モバイルバッテリー</label>
+      <label><input type="checkbox"> 変換プラグ（A/C対応）</label>
+      <label><input type="checkbox"> カメラ・SDカード</label>
+      <label><input type="checkbox"> 延長コード</label>
+    </details>
+  </section>
 
-<!-- 衛生 -->
-<section>
-  <details>
-    <summary>🧴 衛生・健康</summary>
-    <label><input type="checkbox"> 虫よけスプレー</label>
-    <label><input type="checkbox"> 日焼け止め</label>
-    <label><input type="checkbox"> 常備薬（胃薬・下痢止め・解熱剤など）</label>
-    <label><input type="checkbox"> ウェットティッシュ・ポケットティッシュ</label>
-    <label><input type="checkbox"> 塩飴・ポカリ粉末</label>
-    <label><input type="checkbox"> マスク</label>
-  </details>
-</section>
+  <!-- 衣類 -->
+  <section>
+    <details>
+      <summary>👕 衣類</summary>
+      <label><input type="checkbox"> Tシャツ ×4〜5</label>
+      <label><input type="checkbox"> 長袖シャツ ×1〜2</label>
+      <label><input type="checkbox"> 長ズボン・ロングスカート ×2</label>
+      <label><input type="checkbox"> 短パン ×1〜2</label>
+      <label><input type="checkbox"> 下着・靴下 ×5</label>
+      <label><input type="checkbox"> 水着</label>
+      <label><input type="checkbox"> 帽子・サングラス</label>
+      <label><input type="checkbox"> 軽い羽織りもの</label>
+      <label><input type="checkbox"> 折りたたみ傘 or レインコート</label>
+    </details>
+  </section>
 
-<!-- その他 -->
-<section>
-  <details>
-    <summary>🎒 その他便利アイテム</summary>
-    <label><input type="checkbox"> 折りたたみリュック</label>
-    <label><input type="checkbox"> 防水ポーチ</label>
-    <label><input type="checkbox"> トラベル洗剤・洗濯ロープ</label>
-    <label><input type="checkbox"> トラベルクッション</label>
-    <label><input type="checkbox"> 小型懐中電灯</label>
-    <label><input type="checkbox"> ジップロック袋</label>
-  </details>
-</section>
+  <!-- 衛生 -->
+  <section>
+    <details>
+      <summary>🧴 衛生・健康</summary>
+      <label><input type="checkbox"> 虫よけスプレー</label>
+      <label><input type="checkbox"> 日焼け止め</label>
+      <label><input type="checkbox"> 常備薬（胃薬・下痢止め・解熱剤など）</label>
+      <label><input type="checkbox"> ウェットティッシュ・ポケットティッシュ</label>
+      <label><input type="checkbox"> 塩飴・ポカリ粉末</label>
+      <label><input type="checkbox"> マスク</label>
+    </details>
+  </section>
 
-<!-- 宿泊・割り勘情報（追加） -->
-<section>
-  <details>
-    <summary>🏨 宿泊情報・割り勘サイト</summary>
-    <p style="margin:8px 0;">
-      プノンペンの宿: 
-      <a href="https://maps.app.goo.gl/WahkYqS9fUZ1XcDt8?g_st=ipc" target="_blank" rel="noopener noreferrer">
-        地図を開く（プノンペン）
-      </a>
-    </p>
-    <p style="margin:8px 0;">
-      シェムリアップの宿: 
-      <a href="https://maps.app.goo.gl/ZACanPovHNmpbCjx6?g_st=ipc" target="_blank" rel="noopener noreferrer">
-        地図を開く（シェムリアップ）
-      </a>
-    </p>
-    <p style="margin:8px 0;">
-      割り勘サイト（Walica）: 
-      <a href="https://walica.jp/group/01JWNMXB80S1482S4FEMB7QTEV" target="_blank" rel="noopener noreferrer">
-        グループページを開く
-      </a>
-    </p>
-  </details>
-</section>
+  <!-- その他 -->
+  <section>
+    <details>
+      <summary>🎒 その他便利アイテム</summary>
+      <label><input type="checkbox"> 折りたたみリュック</label>
+      <label><input type="checkbox"> 防水ポーチ</label>
+      <label><input type="checkbox"> トラベル洗剤・洗濯ロープ</label>
+      <label><input type="checkbox"> トラベルクッション</label>
+      <label><input type="checkbox"> 小型懐中電灯</label>
+      <label><input type="checkbox"> ジップロック袋</label>
+    </details>
+  </section>
 
-<footer>
-  ✅ チェック内容は自動保存されます（スマホ対応）<br>
-  © 2025 旅行チェックリスト
-</footer>
+  <!-- 宿泊・割り勘情報 -->
+  <section>
+    <details>
+      <summary>🏨 宿泊情報・割り勘サイト</summary>
+      <p style="margin:8px 0;">
+        プノンペンの宿:
+        <a href="https://maps.app.goo.gl/WahkYqS9fUZ1XcDt8?g_st=ipc" target="_blank" rel="noopener noreferrer">地図を開く（プノンペン）</a>
+      </p>
+      <p style="margin:8px 0;">
+        シェムリアップの宿:
+        <a href="https://maps.app.goo.gl/ZACanPovHNmpbCjx6?g_st=ipc" target="_blank" rel="noopener noreferrer">地図を開く（シェムリアップ）</a>
+      </p>
+      <p style="margin:8px 0;">
+        割り勘サイト（Walica）:
+        <a href="https://walica.jp/group/01JWNMXB80S1482S4FEMB7QTEV" target="_blank" rel="noopener noreferrer">グループページを開く</a>
+      </p>
+    </details>
+  </section>
+
+  <footer>
+    ✅ チェック内容は自動保存されます（スマホ対応）<br />
+    © 2025 旅行チェックリスト
+  </footer>
+</div>
 
 <script>
-  // チェック状態の保存・復元
+  // 保存・復元 (既存)
   const boxes = document.querySelectorAll('input[type="checkbox"]');
   boxes.forEach((box, i) => {
     const saved = localStorage.getItem("check" + i);
@@ -242,9 +329,30 @@
     });
   });
 
-  // --- サイト内検索機能 ---
-  // 対象ノード（label, summary, p, a）に元のHTMLを保存しておく
-  const searchableSelectors = 'label, summary, section p, section a, section summary';
+  // カウントダウン（11/17 を次に来る日付で扱う）
+  function updateCountdown() {
+    const now = new Date();
+    const year = now.getFullYear();
+    // target is November 17
+    let target = new Date(year, 10, 17, 0, 0, 0); // month index 10 = November
+    // if today is after the target date (or same day past midnight), use next year
+    if (now > target) {
+      target = new Date(year + 1, 10, 17, 0, 0, 0);
+    }
+    const oneDay = 1000 * 60 * 60 * 24;
+    const diff = Math.ceil((target - now) / oneDay);
+    const y = target.getFullYear();
+    const mm = String(target.getMonth() + 1).padStart(2, '0');
+    const dd = String(target.getDate()).padStart(2, '0');
+    const el = document.getElementById('countdown');
+    el.textContent = `旅行まであと ${diff} 日（${y}-${mm}-${dd} 出発）`;
+  }
+  updateCountdown();
+  // update every hour in case user keeps page open
+  setInterval(updateCountdown, 1000 * 60 * 60);
+
+  // --- サイト内検索機能（既存: ハイライト・折りたたみ連動） ---
+  const searchableSelectors = 'label, summary, section p, section a';
   const searchableNodes = Array.from(document.querySelectorAll(searchableSelectors));
   searchableNodes.forEach(node => {
     node.dataset.original = node.innerHTML;
@@ -255,21 +363,19 @@
   const searchInfo = document.getElementById('search-info');
 
   function escapeRegExp(string) {
-    return string.replace(/[.*+?^${}()|[\\]\]/g, '\$&');
+    return string.replace(/[.*+?^${}()|[\\]\]/g, '\\$&');
   }
 
   function performSearch(q) {
     const lowQ = q.trim().toLowerCase();
     let totalMatches = 0;
 
-    // restore all nodes first
     searchableNodes.forEach(node => {
       node.innerHTML = node.dataset.original;
+      if (node.tagName.toLowerCase() === 'label') node.style.display = 'flex';
     });
 
     if (lowQ === '') {
-      // show all labels and collapse details to their previous state
-      document.querySelectorAll('label').forEach(l => l.style.display = 'flex');
       document.querySelectorAll('section details').forEach(d => d.open = false);
       searchInfo.style.display = 'none';
       return;
@@ -279,29 +385,25 @@
 
     document.querySelectorAll('section').forEach(section => {
       let sectionMatches = 0;
-      // search within labels and paragraphs and links inside this section
       const nodes = section.querySelectorAll('label, p, a, summary');
       nodes.forEach(n => {
         const text = n.textContent || '';
         if (text.toLowerCase().indexOf(lowQ) !== -1) {
-          // highlight matches in the HTML using the original stored value
           const original = n.dataset && n.dataset.original ? n.dataset.original : n.innerHTML;
           n.innerHTML = original.replace(regex, '<mark>$1</mark>');
           sectionMatches += 1;
         } else {
-          // hide labels only (keep paragraphs/links visible if needed)
           if (n.tagName.toLowerCase() === 'label') {
             n.style.display = 'none';
           }
         }
       });
-
+      const details = section.querySelector('details');
       if (sectionMatches > 0) {
-        section.querySelector('details').open = true;
+        details.open = true;
       } else {
-        section.querySelector('details').open = false;
+        details.open = false;
       }
-
       totalMatches += sectionMatches;
     });
 
